@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Running...!
+  displayName: 'Run a one-line script'
+
+- task: CopyFiles@2
+  inputs:
+    Contents: 'azuredeploy*.json'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
